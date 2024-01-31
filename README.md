@@ -29,7 +29,6 @@ Item : Identifiable, RepositionableItem
     ]
 }
 
-
 struct
 ItemView : View
 {
