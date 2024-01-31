@@ -13,52 +13,52 @@ It should work like this:
 struct
 Item : Identifiable, RepositionableItem
 {
-	let id									=	UUID()
-	var	name			:	String
-	var color			:	Color
-	var	position		:	CGPoint
-	var	size			:	CGSize
-	
-	static
-	let
-	testItems: [Item] =
-	[
-		Item(name: "Item 1", color: .red, position: CGPoint(x: 150, y: 150), size: CGSize(width: 100, height: 175)),
-		Item(name: "Item 2", color: .yellow, position: CGPoint(x: 210, y: 210), size: CGSize(width: 125, height: 80)),
-		Item(name: "Item 3", color: .blue, position: CGPoint(x: 110, y: 200), size: CGSize(width: 100, height: 50)),
-	]
+    let id                                  =   UUID()
+    var name            :   String
+    var color           :   Color
+    var position        :   CGPoint
+    var size            :   CGSize
+    
+    static
+    let
+    testItems: [Item] =
+    [
+        Item(name: "Item 1", color: .red, position: CGPoint(x: 150, y: 150), size: CGSize(width: 100, height: 175)),
+        Item(name: "Item 2", color: .yellow, position: CGPoint(x: 210, y: 210), size: CGSize(width: 125, height: 80)),
+        Item(name: "Item 3", color: .blue, position: CGPoint(x: 110, y: 200), size: CGSize(width: 100, height: 50)),
+    ]
 }
 
 
 struct
 ItemView : View
 {
-	let	item			:	Item
-	
-	var
-	body: some View
-	{
-		ZStack
-		{
-			self.item.color
-			Text("\(self.item.name)")
-		}
-	}
+    let item            :   Item
+    
+    var
+    body: some View
+    {
+        ZStack
+        {
+            self.item.color
+            Text("\(self.item.name)")
+        }
+    }
 }
 
 struct
 ContentView: View
 {
-	var
-	body: some View
-	{
-		RepositionableItemContainer(Item.testItems)
-		{ inItem in
-			ItemView(item: inItem)
-		}
-		.padding()
-		.frame(width: 600, height: 400)
-	}
+    var
+    body: some View
+    {
+        RepositionableItemContainer(Item.testItems)
+        { inItem in
+            ItemView(item: inItem)
+        }
+        .padding()
+        .frame(width: 600, height: 400)
+    }
 }
 ```
 
