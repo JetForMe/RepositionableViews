@@ -81,4 +81,5 @@ ContentView: View
 #Preview
 {
 	ContentView()
+		.previewLayout(.fixed(width: 600, height: 400))
 }

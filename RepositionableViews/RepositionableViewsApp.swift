@@ -10,8 +10,10 @@ import SwiftUI
 @main
 struct RepositionableViewsApp: App {
     var body: some Scene {
-        WindowGroup {
+        Window("Window", id: "widow")
+        {
             ContentView()
         }
+        .windowResizability(.contentSize)
     }
 }
