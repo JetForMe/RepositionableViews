@@ -9,7 +9,7 @@ Right now I’m trying to add the drag gesture to allow repositioning the items,
 
 ## Xcode Issues
 
-The preview size is set to 600x400. But the preview is decided NOT that size, and it’s positioning the subviews incorrectly. Thsi was solved by adding `.frame(maxWidth: .infinity, maxHeight: .infinity)`,
+The preview size is set to 600x400. But the preview is decidedly NOT that size, and it’s positioning the subviews incorrectly. Thsi was solved by adding `.frame(maxWidth: .infinity, maxHeight: .infinity)`,
 not sure why.
 
 ![](assets/Preview.png)
