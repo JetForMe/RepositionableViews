@@ -51,10 +51,12 @@ ItemView : View
 struct
 ContentView: View
 {
+	@State	var	items				=	Item.testItems
+	
 	var
 	body: some View
 	{
-		RepositionableItemContainer(Item.testItems)
+		RepositionableItemContainer(self.items)
 		{ inItem in
 			ItemView(item: inItem)
 		}
