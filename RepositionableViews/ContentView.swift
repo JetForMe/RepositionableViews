@@ -48,84 +48,13 @@ ItemView : View
 	}
 }
 
-protocol
-RepositionableItem : Identifiable
-{
-	var position		:	CGPoint		{ get set }
-	var	size			:	CGSize		{ get set }
-}
-
-struct
-RepositionableItemView<Content : View> : View
-{
-	let	content			:	() -> Content
-	
-	var
-	body: some View
-	{
-		self.content()
-	}
-}
-
-struct
-RepositionableContainer<Content : View, Item : RepositionableItem> : View
-{
-	let	items							:	[Item]
-	let itemViewContent					:	(Item) -> Content
-	
-	init(_ inItems: [Item], itemViewContent: @escaping (Item) -> Content)
-	{
-		self.items = inItems
-		self.itemViewContent = itemViewContent
-	}
-	
-	var
-	body: some View
-	{
-		ZStack
-		{
-			Color.cyan
-			
-			ForEach(self.items)
-			{ inItem in
-				RepositionableItemView
-				{
-					self.itemViewContent(inItem)
-				}
-				.frame(width: inItem.size.width, height: inItem.size.height)
-				.position(inItem.position)
-				.gesture(
-					DragGesture()
-						.onChanged
-						{ gesture in
-							if self.dragOffset == nil
-							{
-								let _ = print("Drag start:   \(gesture.startLocation)")
-								self.dragOffset = inItem.position - gesture.startLocation
-							}
-							
-							inItem.position = gesture.location + self.dragOffset!
-						}
-						.onEnded
-						{ _ in
-							self.dragOffset = nil
-						}
-				)
-			}
-		}
-		.frame(maxWidth: .infinity, maxHeight: .infinity)
-	}
-	
-	@State				private	var	dragOffset					:	CGPoint?
-}
-
 struct
 ContentView: View
 {
 	var
 	body: some View
 	{
-		RepositionableContainer(Item.testItems)
+		RepositionableItemContainer(Item.testItems)
 		{ inItem in
 			ItemView(item: inItem)
 		}
