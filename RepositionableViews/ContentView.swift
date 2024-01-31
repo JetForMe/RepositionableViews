@@ -94,10 +94,29 @@ RepositionableContainer<Content : View, Item : RepositionableItem> : View
 				}
 				.frame(width: inItem.size.width, height: inItem.size.height)
 				.position(inItem.position)
+				.gesture(
+					DragGesture()
+						.onChanged
+						{ gesture in
+							if self.dragOffset == nil
+							{
+								let _ = print("Drag start:   \(gesture.startLocation)")
+								self.dragOffset = inItem.position - gesture.startLocation
+							}
+							
+							inItem.position = gesture.location + self.dragOffset!
+						}
+						.onEnded
+						{ _ in
+							self.dragOffset = nil
+						}
+				)
 			}
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
 	}
+	
+	@State				private	var	dragOffset					:	CGPoint?
 }
 
 struct
@@ -120,3 +139,52 @@ ContentView: View
 	ContentView()
 		.previewLayout(.fixed(width: 600, height: 400))
 }
+
+
+
+
+
+
+
+
+extension
+CGPoint
+{
+	static
+	func
+	+(lhs: CGPoint, rhs: CGPoint)
+		-> CGPoint
+	{
+		return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+	}
+	
+	static
+	func
+	+(lhs: CGPoint, rhs: CGSize)
+		-> CGPoint
+	{
+		return CGPoint(x: lhs.x + rhs.width, y: lhs.y + rhs.height)
+	}
+	
+	static
+	func
+	+=(lhs: inout CGPoint, rhs: CGSize)
+	{
+		lhs = CGPoint(x: lhs.x + rhs.width, y: lhs.y + rhs.height)
+	}
+	
+	static
+	func
+	-(lhs: CGPoint, rhs: CGPoint)
+		-> CGPoint
+	{
+		return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+	}
+	
+	var
+	magnitudeSqr: CGFloat
+	{
+		return self.x * self.x + self.y + self.y
+	}
+}
+
