@@ -64,7 +64,7 @@ ContentView: View
 ## Xcode Issues
 
 The preview size is set to 600x400. But the preview is decidedly *not* that size, and it’s positioning the subviews incorrectly. This was solved by adding `.frame(maxWidth: .infinity, maxHeight: .infinity)`,
-not sure why.
+not sure why. Explore this behavior in commit f7eb238e7437c5a59c1fa19d4b471a2840736d62.
 
 ![](assets/Preview.png)
 
