@@ -13,10 +13,11 @@ import SwiftUI
 
 
 struct
-Item : Identifiable
+Item : Identifiable, RepositionableItem
 {
 	let id									=	UUID()
 	var	name			:	String
+	var color			:	Color
 	var	position		:	CGPoint
 	var	size			:	CGSize
 	
@@ -24,9 +25,9 @@ Item : Identifiable
 	let
 	testItems: [Item] =
 	[
-		Item(name: "Item 1", position: CGPoint(x: 150, y: 150), size: CGSize(width: 100, height: 200)),
-		Item(name: "Item 2", position: CGPoint(x: 200, y: 50), size: CGSize(width: 75, height: 100)),
-		Item(name: "Item 3", position: CGPoint(x: 100, y: 75), size: CGSize(width: 100, height: 50)),
+		Item(name: "Item 1", color: .red, position: CGPoint(x: 150, y: 150), size: CGSize(width: 100, height: 175)),
+		Item(name: "Item 2", color: .yellow, position: CGPoint(x: 210, y: 210), size: CGSize(width: 125, height: 80)),
+		Item(name: "Item 3", color: .blue, position: CGPoint(x: 110, y: 200), size: CGSize(width: 100, height: 50)),
 	]
 }
 
@@ -41,22 +42,61 @@ ItemView : View
 	{
 		ZStack
 		{
-			Color.green
+			self.item.color
 			Text("\(self.item.name)")
 		}
-		.frame(width: self.item.size.width, height: self.item.size.height)
 	}
 }
 
-struct
-RepositionableContainer<Content : View> : View
+protocol
+RepositionableItem : Identifiable
 {
-	let content				:	() -> Content
+	var position		:	CGPoint		{ get set }
+	var	size			:	CGSize		{ get set }
+}
+
+struct
+RepositionableItemView<Content : View> : View
+{
+	let	content			:	() -> Content
 	
 	var
 	body: some View
 	{
-		content()
+		self.content()
+	}
+}
+
+struct
+RepositionableContainer<Content : View, Item : RepositionableItem> : View
+{
+	let	items							:	[Item]
+	let itemViewContent					:	(Item) -> Content
+	
+	init(_ inItems: [Item], itemViewContent: @escaping (Item) -> Content)
+	{
+		self.items = inItems
+		self.itemViewContent = itemViewContent
+	}
+	
+	var
+	body: some View
+	{
+		ZStack
+		{
+			Color.cyan
+			
+			ForEach(self.items)
+			{ inItem in
+				RepositionableItemView
+				{
+					self.itemViewContent(inItem)
+				}
+				.frame(width: inItem.size.width, height: inItem.size.height)
+				.position(inItem.position)
+			}
+		}
+		.frame(maxWidth: .infinity, maxHeight: .infinity)
 	}
 }
 
@@ -66,14 +106,11 @@ ContentView: View
 	var
 	body: some View
 	{
-		RepositionableContainer
-		{
-			ForEach(Item.testItems)
-			{ inItem in
-				ItemView(item: inItem)
-					.position(inItem.position)
-			}
+		RepositionableContainer(Item.testItems)
+		{ inItem in
+			ItemView(item: inItem)
 		}
+		.padding()
 		.frame(width: 600, height: 400)
 	}
 }
