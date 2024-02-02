@@ -61,6 +61,19 @@ ContentView: View
 		{ inItem in
 			ItemView(item: inItem)
 		}
+		.focusedSceneValue(\.selectedItems, self.$selection)
+		.onBringToFront
+		{
+			let items = self.items.filter { self.selection.contains($0.id) }
+			self.items.removeAll { self.selection.contains($0.id) }
+			self.items.append(contentsOf: items)
+		}
+		.onSendToBack
+		{
+			let items = self.items.filter { self.selection.contains($0.id) }
+			self.items.removeAll { self.selection.contains($0.id) }
+			self.items.insert(contentsOf: items, at: .zero)
+		}
 		.padding()
 		.frame(width: 600, height: 400)
 		.toolbar
@@ -74,6 +87,25 @@ ContentView: View
 		}
 	}
 }
+
+
+struct
+SelectedItemsKey : FocusedValueKey
+{
+	typealias Value		=	Binding<[Item.ID]>
+}
+
+extension
+FocusedValues
+{
+	var
+	selectedItems: SelectedItemsKey.Value?
+	{
+		get { self[SelectedItemsKey.self] }
+		set { self[SelectedItemsKey.self] = newValue }
+	}
+}
+
 
 #Preview
 {

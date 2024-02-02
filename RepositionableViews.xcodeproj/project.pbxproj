@@ -12,6 +12,7 @@
 		C6003B622B69E70B00F42014 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6003B612B69E70B00F42014 /* Assets.xcassets */; };
 		C6003B652B69E70B00F42014 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6003B642B69E70B00F42014 /* Preview Assets.xcassets */; };
 		C6003B6E2B6A487800F42014 /* RepositionableItemContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6003B6D2B6A487800F42014 /* RepositionableItemContainer.swift */; };
+		C6003B722B6CDA0B00F42014 /* ObjectMenuCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6003B712B6CDA0B00F42014 /* ObjectMenuCommands.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		C6003B662B69E70B00F42014 /* RepositionableViews.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RepositionableViews.entitlements; sourceTree = "<group>"; };
 		C6003B6C2B69E71600F42014 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C6003B6D2B6A487800F42014 /* RepositionableItemContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositionableItemContainer.swift; sourceTree = "<group>"; };
+		C6003B712B6CDA0B00F42014 /* ObjectMenuCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectMenuCommands.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				C6003B5D2B69E70A00F42014 /* RepositionableViewsApp.swift */,
 				C6003B5F2B69E70A00F42014 /* ContentView.swift */,
 				C6003B6D2B6A487800F42014 /* RepositionableItemContainer.swift */,
+				C6003B712B6CDA0B00F42014 /* ObjectMenuCommands.swift */,
 				C6003B612B69E70B00F42014 /* Assets.xcassets */,
 				C6003B662B69E70B00F42014 /* RepositionableViews.entitlements */,
 				C6003B632B69E70B00F42014 /* Preview Content */,
@@ -147,6 +150,7 @@
 				C6003B602B69E70A00F42014 /* ContentView.swift in Sources */,
 				C6003B5E2B69E70A00F42014 /* RepositionableViewsApp.swift in Sources */,
 				C6003B6E2B6A487800F42014 /* RepositionableItemContainer.swift in Sources */,
+				C6003B722B6CDA0B00F42014 /* ObjectMenuCommands.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

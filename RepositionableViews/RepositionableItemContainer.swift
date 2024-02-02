@@ -36,7 +36,7 @@ RepositionableItemView<Content : View> : View
 		ZStack
 		{
 			self.content()
-				.border(self.strokeStyle)
+				.border(self.strokeStyle)				//	Show selection
 		}
 	}
 	
@@ -189,5 +189,4 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 	
 	@State	private	var	dragStartPositions				:	[CGPoint]		=	[]
 }
-
 

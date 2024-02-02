@@ -8,12 +8,20 @@
 import SwiftUI
 
 @main
-struct RepositionableViewsApp: App {
-    var body: some Scene {
-        Window("Window", id: "widow")
-        {
-            ContentView()
-        }
-        .windowResizability(.contentSize)
-    }
+struct
+RepositionableViewsApp: App
+{
+	var
+	body: some Scene
+	{
+		Window("Window", id: "widow")
+		{
+			ContentView()
+		}
+		.windowResizability(.contentSize)
+		.commands
+		{
+			ObjectMenuCommands()
+		}
+	}
 }
