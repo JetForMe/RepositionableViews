@@ -5,7 +5,7 @@ reposition and resize the subviews contained within it using drag gestures.
 
 ![](assets/Reposition.gif)
 
-Dragging and selection has been refined a bit.
+Dragging and selection has been refined a bit. You can bring items to front or send them to back.
 
 It should work like this:
 
