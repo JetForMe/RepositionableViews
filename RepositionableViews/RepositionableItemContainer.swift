@@ -70,7 +70,18 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 	{
 		ZStack
 		{
-			Color.cyan
+			Color.cyan					//	TODO: This will have to be .clear for production code.
+				
+				//	Install a click handler that deselects any current selection…
+				
+				.gesture(
+					TapGesture()
+						.modifiers([])
+						.onEnded
+						{ _ in
+							self.selection?.wrappedValue.removeAll()
+						}
+				)
 			
 			ForEach(self.items)
 			{ inItem in
@@ -81,6 +92,9 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 				}
 				.frame(width: inItem.size.width, height: inItem.size.height)
 				.position(inItem.position)
+				
+				//	Drag handler for moving whole items…
+				
 				.gesture(
 					DragGesture(minimumDistance: 2.0)
 						.onChanged
@@ -101,6 +115,9 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 							self.dragOffset = nil
 						}
 				)
+				
+				//	Click handler for extending the selection…
+				
 				.gesture(
 					TapGesture()
 						.modifiers(.shift)
@@ -112,11 +129,18 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 							}
 						}
 				)
+				
+				//	Click handler for selecting a new item and deselecting any others…
+				
 				.gesture(
 					TapGesture()
 						.modifiers([])
 						.onEnded
 						{ _ in
+							//	TODO: Call removeAll before test to always deselect, even when clicking on a selected
+							//			item. Call it inside the test to only deselect if clicking on an unselected
+							//			item.
+							
 							if self.selection?.wrappedValue.contains(inItem.id) == false
 							{
 								self.selection?.wrappedValue.removeAll()
