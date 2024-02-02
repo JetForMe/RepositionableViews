@@ -5,7 +5,7 @@ reposition and resize the subviews contained within it using drag gestures.
 
 ![](assets/BsicContainer.png)
 
-Right now I’m trying to add the drag gesture to allow repositioning the items, but I can’t modify the immutable items. I think I need some kind of Binding here, but I’m not yet sure how to set that up.
+I've got crude view dragging support working.
 
 It should work like this:
 
