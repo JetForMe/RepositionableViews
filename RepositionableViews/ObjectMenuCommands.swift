@@ -72,7 +72,7 @@ extension
 View
 {
 	func
-//	onBringToFront(disabled: @autoclosure () -> Bool, perform: @escaping () -> ())	//	TODO: Make disabled an autoclosure
+//	onBringToFront(disabled: @autoclosure () -> Bool, perform: @escaping () -> ())
 	onBringToFront(disabled: Bool = false, perform: @escaping () -> ())	//	TODO: Make disabled an autoclosure
 		-> some View
 	{
