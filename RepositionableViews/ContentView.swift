@@ -62,7 +62,7 @@ ContentView: View
 			ItemView(item: inItem)
 		}
 		.focusedSceneValue(\.selectedItems, self.$selection)
-		.onBringToFront
+		.onBringToFront(disabled: self.selection.isEmpty)
 		{
 			let items = self.items.filter { self.selection.contains($0.id) }
 			self.items.removeAll { self.selection.contains($0.id) }

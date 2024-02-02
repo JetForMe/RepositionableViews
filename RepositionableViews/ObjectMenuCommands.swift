@@ -20,12 +20,15 @@ ObjectMenuCommands : Commands
 		{
 			Button("Bring to Front")
 			{
-				self.bringToFrontCommand?()
+				self.bringToFrontCommand?.1()
 			}
+			.disabled(self.bringToFrontCommand?.0 ?? false)
+			
 			Button("Send to Back")
 			{
-				self.sendToBackCommand?()
+				self.sendToBackCommand?.1()
 			}
+			.disabled(self.sendToBackCommand?.0 ?? false)
 		}
 	}
     
@@ -37,13 +40,13 @@ ObjectMenuCommands : Commands
 struct
 BringToFrontCommandKey : FocusedValueKey
 {
-	typealias Value		=	() -> Void
+	typealias Value		=	(Bool, () -> Void)
 }
 
 struct
 SendToBackCommandKey : FocusedValueKey
 {
-	typealias Value		=	() -> Void
+	typealias Value		=	(Bool, () -> Void)
 }
 
 extension
@@ -69,16 +72,16 @@ extension
 View
 {
 	func
-	onBringToFront(perform: @escaping () -> ())
+	onBringToFront(disabled: Bool = false, perform: @escaping () -> ())	//	TODO: Make disabled an autoclosure
 		-> some View
 	{
-		self.focusedSceneValue(\.bringToFrontCommand, perform)
+		self.focusedSceneValue(\.bringToFrontCommand, (disabled, perform))
 	}
 	
 	func
-	onSendToBack(perform: @escaping () -> ())
+	onSendToBack(disabled: Bool = false, perform: @escaping () -> ())
 		-> some View
 	{
-		self.focusedSceneValue(\.sendToBackCommand, perform)
+		self.focusedSceneValue(\.sendToBackCommand, (disabled, perform))
 	}
 }
