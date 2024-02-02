@@ -36,18 +36,15 @@ RepositionableItemView<Content : View> : View
 		ZStack
 		{
 			self.content()
-			
-			if self.selected
-			{
-				Rectangle()
-					.strokeBorder(.blue, lineWidth: 4.0)
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-				Rectangle()
-					.strokeBorder(.black, lineWidth: 1.0)
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-					.padding(4.0)
-			}
+				.border(self.strokeStyle)
 		}
+	}
+	
+	private
+	var
+	strokeStyle: AnyShapeStyle
+	{
+		self.selected ? AnyShapeStyle(.selection) : AnyShapeStyle(.clear)
 	}
 }
 
