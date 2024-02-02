@@ -52,16 +52,26 @@ struct
 ContentView: View
 {
 	@State	var	items				=	Item.testItems
+	@State	var	selection			=	[Item.ID]()
 	
 	var
 	body: some View
 	{
-		RepositionableItemContainer(self.$items)
+		RepositionableItemContainer(self.$items, selection: self.$selection)
 		{ inItem in
 			ItemView(item: inItem)
 		}
 		.padding()
 		.frame(width: 600, height: 400)
+		.toolbar
+		{
+			Button("Bring to Front")
+			{
+				let items = self.items.filter { self.selection.contains($0.id) }
+				self.items.removeAll { self.selection.contains($0.id) }
+				self.items.append(contentsOf: items)
+			}
+		}
 	}
 }
 
