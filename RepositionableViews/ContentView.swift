@@ -56,7 +56,7 @@ ContentView: View
 	var
 	body: some View
 	{
-		RepositionableItemContainer(self.items)
+		RepositionableItemContainer(self.$items)
 		{ inItem in
 			ItemView(item: inItem)
 		}

@@ -33,12 +33,12 @@ RepositionableItemView<Content : View> : View
 struct
 RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 {
-	let	items							:	[Item]
-	let itemViewContent					:	(Item) -> Content
+	@Binding	var	items							:	[Item]
+				let itemViewContent					:	(Item) -> Content
 	
-	init(_ inItems: [Item], itemViewContent: @escaping (Item) -> Content)
+	init(_ inItems: Binding<[Item]>, itemViewContent: @escaping (Item) -> Content)
 	{
-		self.items = inItems
+		self._items = inItems
 		self.itemViewContent = itemViewContent
 	}
 	
@@ -63,11 +63,14 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 						{ gesture in
 							if self.dragOffset == nil
 							{
-								let _ = print("Drag start:   \(gesture.startLocation)")
+//								let _ = print("Drag start:   \(gesture.startLocation)")
 								self.dragOffset = inItem.position - gesture.startLocation
 							}
 							
-							inItem.position = gesture.location + self.dragOffset!		//	Can’t do this!
+							if let idx = self.items.firstIndex(where: { $0.id == inItem.id })
+							{
+								self.items[idx].position = gesture.location + self.dragOffset!		//	Can’t do this!
+							}
 						}
 						.onEnded
 						{ _ in
