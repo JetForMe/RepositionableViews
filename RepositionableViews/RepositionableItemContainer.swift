@@ -83,8 +83,10 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 						}
 				)
 			
-			ForEach(self.items)
-			{ inItem in
+			//	Add views for each item…
+			
+			ForEach(self.$items)
+			{ $inItem in
 				let selected = self.selection?.wrappedValue.contains(inItem.id) ?? false
 				RepositionableItemView(selected: selected)
 				{
@@ -99,20 +101,55 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 					DragGesture(minimumDistance: 2.0)
 						.onChanged
 						{ gesture in
-							if self.dragOffset == nil
+							
+							//	If the clicked item is not in the selection, deselect all and select it…
+								
+							if self.dragStartPositions.isEmpty
 							{
-//								let _ = print("Drag start:   \(gesture.startLocation)")
-								self.dragOffset = inItem.position - gesture.startLocation
+								if self.selection?.wrappedValue.contains(inItem.id) == false
+								{
+									if !NSEvent.modifierFlags.contains(.shift)
+									{
+										self.selection?.wrappedValue.removeAll()
+									}
+									self.selection?.wrappedValue.append(inItem.id)
+								}
 							}
 							
-							if let idx = self.items.firstIndex(where: { $0.id == inItem.id })
+							//	Get the indices of the selected items…
+							
+							let indexes: [Int]
+							if let selection = self.selection
 							{
-								self.items[idx].position = gesture.location + self.dragOffset!		//	Can’t do this!
+								indexes = self.items
+												.filter { selection.wrappedValue.contains($0.id) }
+												.map { item in self.items.firstIndex(where: { $0.id == item.id }) }
+												.compactMap { $0 }
 							}
+							else
+							{
+								indexes = [self.items.firstIndex(where: { $0.id == inItem.id })!]
+							}
+							
+							//	Remember where each one started…
+							//	This redundantly moves inItem twice, if it’s part of the selection,
+							//	but I don’t think it’ll be an issue…
+							
+							if self.dragStartPositions.isEmpty
+							{
+								self.dragStartPositions = self.items.map { $0.position }
+								self.dragStartPositions.append(inItem.position)
+							}
+							
+							for idx in indexes
+							{
+								self.items[idx].position = self.dragStartPositions[idx] + gesture.translation
+							}
+							inItem.position = self.dragStartPositions.last! + gesture.translation
 						}
 						.onEnded
 						{ _ in
-							self.dragOffset = nil
+							self.dragStartPositions.removeAll()
 						}
 				)
 				
@@ -153,7 +190,7 @@ RepositionableItemContainer<Content : View, Item : RepositionableItem> : View
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
 	}
 	
-	@State	private	var	dragOffset					:	CGPoint?
+	@State	private	var	dragStartPositions				:	[CGPoint]		=	[]
 }
 
 

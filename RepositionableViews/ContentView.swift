@@ -109,6 +109,13 @@ CGPoint
 	
 	static
 	func
+	+=(lhs: inout CGPoint, rhs: CGPoint)
+	{
+		lhs = CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+	}
+	
+	static
+	func
 	+=(lhs: inout CGPoint, rhs: CGSize)
 	{
 		lhs = CGPoint(x: lhs.x + rhs.width, y: lhs.y + rhs.height)
